@@ -38,4 +38,21 @@ pipeline{
             }
         }
     }
+
+post {
+    success{
+        emailtext(
+            subject: "Build Success",
+            body: "Build Success, good news",
+            to: "rishabhkumarsingh94@gmail.com"
+        )
+    }
+    failure{
+        emailtext(
+            subject: "Build Failed",
+            body: "Build Failed, bad news",
+            to: "rishabhkumarsingh94@gmail.com"
+        )    
+    }
+}   
 }

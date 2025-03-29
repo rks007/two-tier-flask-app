@@ -13,7 +13,9 @@ pipeline{
         }
         stage("Trivy File System Scan"){
             steps{
-                sh "trivy fs . -o results.json"
+                script{
+                    trivy_fs();
+                }
             }
         }    
         stage("Build"){
@@ -28,15 +30,8 @@ pipeline{
         }
         stage("push to docker hub"){
             steps{
-                withCredentials([usernamePassword(
-                    credentialsId:"dockerHubCreds",
-                    passwordVariable: "dockerHubPass",
-                    usernameVariable: "dockerHubUser"
-                )]){
-                    
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "docker image tag two-tier-flask-app ${env.dockerHubUser}/two-tier-flask-app"
-                    sh "docker push ${env.dockerHubUser}/two-tier-flask-app"
+                script{
+                    docker_push(dockerHubCreds, two-tier-flask-app);
                 }
             }
         }

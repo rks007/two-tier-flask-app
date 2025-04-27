@@ -20,7 +20,7 @@ spec:
           image: rks007/flaskapp
           env:
             - name: MYSQL_HOST
-              value: "mysql"
+              value: "10.96.37.141"
             - name: MYSQL_USER
               value: "root"
             - name: MYSQL_PASSWORD
